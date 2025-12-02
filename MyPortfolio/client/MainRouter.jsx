@@ -1,0 +1,30 @@
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+
+import Layout from './components/Layout.jsx'
+import Home from './components/Home.jsx'
+import About from './src/about.jsx'
+import Contact from './src/contact.jsx'
+import Education from './src/education.jsx'
+import Projects from './src/projects.jsx'
+import Services from './src/services.jsx'
+import Signup from './src/auth/Signup.jsx'
+import Signin from './src/auth/Signin.jsx'
+
+const MainRouter = () => (
+  <Routes>
+    <Route element={<Layout />}>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/education" element={<Education />} />
+      <Route path="/projects" element={<Projects />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/contact" element={<Contact />} />
+    </Route>
+
+    <Route path="/auth/signup" element={<Signup />} />
+    <Route path="/auth/signin" element={<Signin />} />
+  </Routes>
+)
+
+export default MainRouter

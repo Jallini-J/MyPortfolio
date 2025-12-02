@@ -3,11 +3,6 @@ import jwt from "jsonwebtoken";
 import { expressjwt } from "express-jwt";
 import config from "./../../config/config.js";
 
-import User from "../models/user.model.js";
-import jwt from "jsonwebtoken";
-import { expressjwt } from "express-jwt";
-import config from "./../../config/config.js";
-
 const signup = async (req, res) => {
   try {
     const user = new User(req.body);
