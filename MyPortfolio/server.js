@@ -21,10 +21,20 @@ app.use(userRoutes);      // /api/users
 app.use(projectRoutes);   // /api/projects
 app.use(educationRoutes); // /api/qualifications (or /api/education if you named it that)
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+// Connect to MongoDB with explicit options and better error logging
+mongoose.connect(process.env.MONGO_URI, {
+  // Mongoose 6+ uses these by default but explicit helps older hosts
+  // and allows adjusting the server selection timeout for diagnostics
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 30000 // increase timeout to 30s for slow networks
+})
   .then(() => console.log("Connected to MongoDB!"))
-  .catch(err => console.error("MongoDB connection error:", err));
+  .catch(err => {
+    console.error("MongoDB connection error:", err && err.message ? err.message : err);
+    console.error("Check MONGO_URI, network access, and Atlas IP whitelist (if using Atlas).");
+    // Keep process alive but log the issue; you can also exit process if desired
+  });
 
 // Test route
 app.get("/", (req, res) => {

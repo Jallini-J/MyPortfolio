@@ -23,18 +23,29 @@ setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
 };
 
 // Form submission with alert and redirect
-const handleSubmit = (event) => {
-event.preventDefault();
-alert(
-`Thank you for your message!
-Name: ${formData.firstName} ${formData.lastName}
-Phone: ${formData.contactNumber}
-Email: ${formData.email}
-Message: ${formData.message}`
-);
-// Redirect to Home page
-navigate('/');
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  try {
+    await axios.post("http://localhost:5000/api/contacts", formData);
+
+    alert("Message sent successfully!");
+
+    setFormData({
+      firstName: "",
+      lastName: "",
+      contactNumber: "",
+      email: "",
+      message: ""
+    });
+
+    navigate("/");
+  } catch (error) {
+    console.error(error);
+    alert("Failed to send message.");
+  }
 };
+
 
 return (
 <div className="contact-container">

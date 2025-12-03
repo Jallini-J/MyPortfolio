@@ -3,14 +3,25 @@ import extend from "lodash/extend.js";
 import errorHandler from "./error.controller.js";
 
 const create = async (req, res) => {
-  const contact = new Contact(req.body);
+  const { firstName, lastName, contactNumber, email, message } = req.body;
+
   try {
+    const contact = new Contact({
+      firstName,
+      lastName,
+      contactNumber,
+      email,
+      message
+    });
+
     await contact.save();
-    return res.status(200).json({ message: "Contact created successfully!" });
+    return res.status(200).json({ message: "Message sent successfully!", contact });
   } catch (err) {
+    console.error(err);
     return res.status(400).json({ error: errorHandler.getErrorMessage(err) });
   }
 };
+
 
 const list = async (req, res) => {
   try {
