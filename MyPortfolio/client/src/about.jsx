@@ -11,6 +11,8 @@ return (
 <p className="about-text">
 My name is Jallini Joachimpillai, and I am a second-year student in the Software Engineering Technology - Artificial Intelligence Co-op Program at Centennial College. With a background in Social Work, I am transitioning into the tech field to explore the intersection of technology and social impact. My career goal is to design and develop AI solutions that improve social systems and contribute to the betterment of society.
 </p>
+<p>This is a CI/CD test update.</p>
+
 <div className="resume-section">
 <a href={resumePDF} download="Jallini_Joachimpillai_Resume.pdf" className="resume-link">
 📄 Download My Resume 
