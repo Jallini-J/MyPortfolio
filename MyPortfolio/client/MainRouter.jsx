@@ -8,8 +8,8 @@ import Contact from './contact.jsx'
 import Education from './education.jsx'
 import Projects from './projects.jsx'
 import Services from './services.jsx'
-import Signup from './src/auth/Signup.jsx'
-import Signin from './src/auth/Signin.jsx'
+import Signup from './auth/Signup.jsx'
+import Signin from './auth/Signin.jsx'
 
 const MainRouter = () => (
   <Routes>
