@@ -1,93 +1,42 @@
-import React, { useState } from "react";
-import API from "../api";
+import React, { useState, useContext } from "react";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Signin() {
+  const { signin } = useContext(AuthContext);
+
   const [values, setValues] = useState({
     email: "",
     password: "",
-    error: "",
-    success: false,
+    error: ""
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setValues({ ...values, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await fetch(`${API}/auth/signin`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
+      const res = await axios.post("http://localhost:5000/auth/signin", values);
 
-      const data = await res.json();
+      signin(res.data.user, res.data.token);
 
-      if (!res.ok) {
-        setValues({ ...values, error: data.error });
-        return;
-      }
-
-      // Save token + user to browser
-      localStorage.setItem("jwt", JSON.stringify(data));
-
-      setValues({
-        email: "",
-        password: "",
-        error: "",
-        success: true,
-      });
-
-      // Redirect after login
-      window.location.href = "/";
+      window.location.href = "/"; // redirect home
     } catch (err) {
-      console.log(err);
-      setValues({ ...values, error: "Signin failed. Try again." });
+      setValues({ ...values, error: "Invalid email or password" });
     }
   };
 
   return (
-    <div style={{ padding: "40px", maxWidth: "400px", margin: "auto" }}>
-      <h2>Signin</h2>
+    <div className="auth-container">
+      <h2>Login</h2>
 
       {values.error && <p style={{ color: "red" }}>{values.error}</p>}
-      {values.success && <p style={{ color: "green" }}>Successfully logged in!</p>}
 
       <form onSubmit={handleSubmit}>
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={values.email}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
-        />
-
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={values.password}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
-        />
-
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "black",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
-          Signin
-        </button>
+        <input name="email" placeholder="Email" onChange={handleChange} />
+        <input name="password" type="password" placeholder="Password" onChange={handleChange} />
+        <button type="submit">Signin</button>
       </form>
     </div>
   );

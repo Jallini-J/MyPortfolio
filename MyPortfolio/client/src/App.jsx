@@ -1,17 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import MainRouter from "../MainRouter.jsx";
-
+import { BrowserRouter as Router } from 'react-router-dom'
+import MainRouter from '../MainRouter.jsx'
 
 /**
- * App component - Root component that wraps the application in React Router
- * Provides routing context for the entire portfolio website
+ * App component - Root component that wraps the application in React Router.
+ * The `AuthProvider` is mounted in `main.jsx` so it is not added here.
  */
-const App = () => {
-return (
-<Router>
-<MainRouter />
-</Router>
-);
-};
-export default App;
+function App() {
+	return (
+		<Router>
+			<MainRouter />
+		</Router>
+	)
+}
+
+export default App

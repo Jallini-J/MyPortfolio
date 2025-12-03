@@ -5,37 +5,37 @@ import requireAdmin from "../helpers/requireAdmin.js";
 
 const router = express.Router();
 
-// PUBLIC: List all qualifications
-router.get("/api/qualifications", educationCtrl.list);
+// PUBLIC: List all education entries
+router.get("/api/education", educationCtrl.list);
 
-// PUBLIC: Get single qualification
-router.get("/api/qualifications/:educationId", educationCtrl.read);
+// PUBLIC: Get single education entry
+router.get("/api/education/:id", educationCtrl.read);
 
-// ADMIN ONLY: Create qualification
+// ADMIN ONLY: Create education
 router.post(
-  "/api/qualifications",
+  "/api/education",
   authCtrl.requireSignin,
   requireAdmin,
   educationCtrl.create
 );
 
-// ADMIN ONLY: Update qualification
+// ADMIN ONLY: Update education
 router.put(
-  "/api/qualifications/:educationId",
+  "/api/education/:id",
   authCtrl.requireSignin,
   requireAdmin,
   educationCtrl.update
 );
 
-// ADMIN ONLY: Delete qualification
+// ADMIN ONLY: Delete education
 router.delete(
-  "/api/qualifications/:educationId",
+  "/api/education/:id",
   authCtrl.requireSignin,
   requireAdmin,
   educationCtrl.remove
 );
 
-// Middleware to load education by ID
-router.param("educationId", educationCtrl.educationByID);
+// Middleware to load education by ID (param name 'id')
+router.param("id", educationCtrl.educationByID);
 
 export default router;

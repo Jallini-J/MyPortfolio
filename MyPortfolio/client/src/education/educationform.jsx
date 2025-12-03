@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import API from "../api";
+import api from "../api";
 import "./education.css";
 
 export default function EducationForm({ onCreated }) {
   const [values, setValues] = useState({
-    school: "",
-    degree: "",
+    title: "",
+    institution: "",
     year: "",
+    description: "",
     error: "",
     success: false
   });
@@ -15,32 +16,22 @@ export default function EducationForm({ onCreated }) {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const jwt = JSON.parse(localStorage.getItem("jwt"));
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${API}/education`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt?.token}`
-        },
-        body: JSON.stringify(values)
-      });
+      const res = await api.post("/api/education", values);
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setValues({ ...values, error: data.error });
+      if (res.status !== 201 && res.status !== 200) {
+        setValues({ ...values, error: "Failed to add education" });
         return;
       }
 
       setValues({
-        school: "",
-        degree: "",
+        title: "",
+        institution: "",
         year: "",
+        description: "",
         error: "",
         success: true
       });
@@ -61,9 +52,9 @@ export default function EducationForm({ onCreated }) {
       <form onSubmit={handleSubmit} className="education-card">
         <div className="education-field">
           <input
-            name="school"
-            placeholder="School"
-            value={values.school}
+            name="title"
+            placeholder="Title (e.g., BSc Computer Science)"
+            value={values.title}
             onChange={handleChange}
             required
           />
@@ -71,9 +62,9 @@ export default function EducationForm({ onCreated }) {
 
         <div className="education-field">
           <input
-            name="degree"
-            placeholder="Degree / Program"
-            value={values.degree}
+            name="institution"
+            placeholder="Institution"
+            value={values.institution}
             onChange={handleChange}
             required
           />
@@ -86,6 +77,15 @@ export default function EducationForm({ onCreated }) {
             value={values.year}
             onChange={handleChange}
             required
+          />
+        </div>
+
+        <div className="education-field">
+          <input
+            name="description"
+            placeholder="Description (optional)"
+            value={values.description}
+            onChange={handleChange}
           />
         </div>
 
