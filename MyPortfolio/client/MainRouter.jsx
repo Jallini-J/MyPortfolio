@@ -7,7 +7,7 @@ import About from './src/about.jsx'
 import Contact from './contact.jsx'
 import Education from './education.jsx'
 import Projects from './projects.jsx'
-import Services from './services.jsx'
+import Services from './Services.jsx'
 import Signup from './auth/Signup.jsx'
 import Signin from './auth/Signin.jsx'
 
